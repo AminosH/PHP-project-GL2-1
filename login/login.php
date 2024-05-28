@@ -14,6 +14,7 @@ if (password_verify($_POST["password"], $row['password'])) {
 session_start();
 $_SESSION["loggedin"] = true;
 $_SESSION["login"] = $login;
+$_SESSION["remember_me"] = $_POST["remember"];
 if ($row['is_admin'] == 1) {
 header("location: ../admin/adminPage.php");
 } elseif ($row['is_journalist'] == 1) {

@@ -1,7 +1,7 @@
 <?php
 include_once '../autoloader.php';
 
-class TransfersDAO {
+class TransferDAO {
     private $db;
 
     public function __construct() {
@@ -65,5 +65,25 @@ class TransfersDAO {
         $req->bindParam(':amount', $amount, PDO::PARAM_INT);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @return int
+     */
+    public function getTotalTransfers() {
+        $query = "SELECT COUNT(*) FROM Transfers";
+        $req = $this->db->prepare($query);
+        $req->execute();
+        return $req->fetchColumn();
+    }
+    /**
+     * @param $journalist_id
+     * @return int
+     */
+    public function getTotalTransfersByJournalist($journalist_id) {
+        $query = "SELECT COUNT(*) FROM Transfers WHERE journalist_id = :journalist_id";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':journalist_id', $journalist_id);
+        $req->execute();
+        return $req->fetchColumn();
     }
 }

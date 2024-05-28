@@ -4,8 +4,8 @@ include_once '../autoloader.php';
 class Transfer {
     private $db;
 
-    public function __construct($db) {
-        $this->db = $db;
+    public function __construct() {
+        $this->db = ConnexionBD::getInstance();
     }
 
     /**
@@ -35,13 +35,10 @@ class Transfer {
         }
     }
     /**
-     * @return void
+     * @return string
      */
-    public function showAllTransfers() {
-        $query = "SELECT * FROM Transfers ORDER BY rumor_date DESC";
-        $req = $this->db->prepare($query);
-        $req->execute();
-        $transfers = $req->fetchAll(PDO::FETCH_ASSOC);
+    public function showArrayTransfers(array $transfers) {
+        ob_start();
 
         echo "<table>";
         echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Certainty</th><th>Contract Duration</th><th>Contract Fee</th><th>Journalist ID</th></tr>";
@@ -61,5 +58,7 @@ class Transfer {
         }
 
         echo "</table>";
+
+        return ob_get_clean();
     }
 }
