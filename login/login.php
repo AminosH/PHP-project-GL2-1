@@ -15,11 +15,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["loggedin"] = true;
             $_SESSION["login"] = $login;
             if ($row['is_admin'] == 1) {
-                header("location: ../admin/adminPage.html");
+                header("location: ../admin/adminPage.php");
             } elseif ($row['is_journalist'] == 1) {
-                header("location: ../journalist/journalistPage.html");
+                header("location: ../journalist/journalistPage.php");
             } else {
-                header("location: ../user/userPage.html");
+                header("location: ../user/userPage.php");
             }
         } else {
             $password_err = "The password you entered was not valid.";

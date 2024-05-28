@@ -14,11 +14,11 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
         $row = $req->fetch(PDO::FETCH_ASSOC);
 
         if ($row['is_admin'] == 1) {
-            header("Location: admin/adminPage.html");
+            header("Location: admin/adminPage.php");
         } elseif ($row['is_journalist'] == 1) {
-            header("Location: journalist/journalistPage.html");
+            header("Location: journalist/journalistPage.php");
         } else {
-            header("Location: user/userPage.html");
+            header("Location: user/userPage.php");
         }
     } catch(PDOException $e) {
         echo "Connection failed: " . $e->getMessage();
