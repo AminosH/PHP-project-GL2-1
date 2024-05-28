@@ -1,51 +1,27 @@
 <?php
-require_once '../classes/ConnexionBD.php';
+require_once '../classes/JournalistDAO.php';
+
+$journalistDAO = new JournalistDAO();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = $_POST["login"];
-    $email = $_POST["email"];
     $password = $_POST["password"];
-    $first_name = $_POST["first_name"];
-    $last_name = $_POST["last_name"];
-    $nationality = $_POST["nationality"];
-    $birthdate = $_POST["birthdate"];
-    $media_company = $_POST["media_company"];
-    $independent = $_POST["independent"];
-    $bio = $_POST["bio"];
-
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $journalistData = [
+        'login' => $_POST['login'],
+        'password' => $hashed_password,
+        'email' => $_POST['email'],
+        'first_name' => $_POST['first_name'],
+        'last_name' => $_POST['last_name'],
+        'nationality' => $_POST['nationality'],
+        'birthdate' => $_POST['birthdate'],
+        'media_company' => $_POST["media_company"],
+        'independent' => $_POST['independent'],
+        'bio' => $_POST['bio']
+    ];
 
-    try {
-        $bdd = ConnexionBD::getInstance();
+    $journalistDAO->addJournalist($journalistData);
 
-        $req = $bdd->prepare("INSERT INTO users (login, email, password, is_journalist) VALUES (:login, :email, :password, TRUE)");
-        $req->bindParam(':login', $login);
-        $req->bindParam(':email', $email);
-        $req->bindParam(':password', $hashed_password);
-
-        $req->execute();
-
-        $journalist_id = $bdd->lastInsertId();
-
-        $req = $bdd->prepare("INSERT INTO journalists (journalist_id, first_name, last_name, nationality, birthdate, media_company, independent, bio) VALUES (:journalist_id, :first_name, :last_name, :nationality, :birthdate, :media_company, :independent, :bio)");
-        $req->bindParam(':journalist_id', $journalist_id);
-        $req->bindParam(':first_name', $first_name);
-        $req->bindParam(':last_name', $last_name);
-        $req->bindParam(':nationality', $nationality);
-        $req->bindParam(':birthdate', $birthdate);
-        $req->bindParam(':media_company', $media_company);
-        if($independent == null) {
-            $independent = false;
-        }
-        $req->bindParam(':independent', $independent, PDO::PARAM_BOOL);
-        $req->bindParam(':bio', $bio);
-
-        $req->execute();
-
-        header("Location: ../login/login.html");
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    header("Location: ../login/login.html");
 }
 ?>
 
@@ -79,10 +55,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     <input type="date" id="birthdate" name="birthdate" required>
 
     <label for="independent">Independent:</label>
-    <input type="checkbox" id="independent" name="independent">
+    <input type="checkbox" id="independent" name="independent" checked>
 
     <label for="media_company">Media Company:</label>
-    <input type="text" id="media_company" name="media_company" required>
+    <input type="text" id="media_company" name="media_company" value=" " disabled required>
 
 
     <label for="bio">Bio:</label>

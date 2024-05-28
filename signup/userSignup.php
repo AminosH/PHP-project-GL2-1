@@ -1,27 +1,22 @@
 <?php
-require_once '../classes/ConnexionBD.php';
+require_once '../classes/UserDAO.php';
+
+$userDAO = new UserDAO();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $login = $_POST["login"];
-    $email = $_POST["email"];
     $password = $_POST["password"];
-
     $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+    $userData = [
+        'login' => $_POST['login'],
+        'password' => $hashed_password,
+        'email' => $_POST['email'],
+        'is_admin' => false,
+        'is_journalist' => false
+    ];
 
-    try {
-        $bdd = ConnexionBD::getInstance();
+    $userDAO->addUser($userData);
 
-        $req = $bdd->prepare("INSERT INTO users (login, email, password) VALUES (:login, :email, :password)");
-        $req->bindParam(':login', $login);
-        $req->bindParam(':email', $email);
-        $req->bindParam(':password', $hashed_password);
-
-        $req->execute();
-
-        header("Location: ../login/login.html");
-    } catch(PDOException $e) {
-        echo "Connection failed: " . $e->getMessage();
-    }
+    header("Location: ../login/login.html");
 }
 ?>
 

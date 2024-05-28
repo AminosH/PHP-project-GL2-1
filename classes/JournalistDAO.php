@@ -1,5 +1,6 @@
 <?php
 require_once 'ConnexionBD.php';
+require_once 'UserDAO.php';
 
 class JournalistDAO {
     private $db;
