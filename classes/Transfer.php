@@ -1,4 +1,5 @@
 <?php
+include_once '../autoloader.php';
 
 class Transfer {
     private $db;

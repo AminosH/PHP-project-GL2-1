@@ -1,5 +1,5 @@
 <?php
-require_once 'ConnexionBD.php';
+include_once '../autoloader.php';
 
 class UserDAO {
     private $db;

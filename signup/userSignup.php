@@ -1,5 +1,6 @@
 <?php
-require_once '../classes/UserDAO.php';
+include_once '../autoloader.php';
+
 
 $userDAO = new UserDAO();
 
@@ -16,7 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $userDAO->addUser($userData);
 
-    header("Location: ../login/login.html");
+    header("Location: ../login/login.php");
 }
 ?>
 

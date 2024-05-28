@@ -1,5 +1,5 @@
 <?php
-require_once '../classes/JournalistDAO.php';
+include_once '../autoloader.php';
 
 $journalistDAO = new JournalistDAO();
 
@@ -21,7 +21,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     $journalistDAO->addJournalist($journalistData);
 
-    header("Location: ../login/login.html");
+    header("Location: ../login/login.php");
 }
 ?>
 

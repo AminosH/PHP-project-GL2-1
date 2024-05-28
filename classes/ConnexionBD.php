@@ -1,5 +1,4 @@
 <?php
-
 class ConnexionBD {
     private static $_dbname = "php_project";
     private static $_user = "root";

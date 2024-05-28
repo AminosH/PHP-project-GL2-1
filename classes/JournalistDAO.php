@@ -1,6 +1,5 @@
 <?php
-require_once 'ConnexionBD.php';
-require_once 'UserDAO.php';
+include_once '../autoloader.php';
 
 class JournalistDAO {
     private $db;
@@ -27,6 +26,14 @@ class JournalistDAO {
         $req->bindParam(':journalist_id', $journalist_id);
         $req->execute();
         return $req->fetch(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @param $journalist_id
+     * @return string
+     */
+    public function getJournalistNameById($journalist_id) {
+        $journalist = $this->getJournalistById($journalist_id);
+        return $journalist['first_name'] . ' ' . $journalist['last_name'];
     }
     /**
      * @param $journalistData

@@ -1,5 +1,5 @@
 <?php
-require_once 'ConnexionBD.php';
+include_once '../autoloader.php';
 
 class TransfersDAO {
     private $db;
@@ -35,6 +35,34 @@ class TransfersDAO {
         $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY rumor_date DESC";
         $req = $this->db->prepare($query);
         $req->bindParam(':journalist_id', $journalist_id);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @param int $start
+     * @param int $amount
+     * @return array
+     */
+    public function getTransfersInRange($start, $amount) {
+        $query = "SELECT * FROM Transfers ORDER BY rumor_date DESC LIMIT :start, :amount";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->bindParam(':amount', $amount, PDO::PARAM_INT);
+        $req->execute();
+        return $req->fetchAll(PDO::FETCH_ASSOC);
+    }
+    /**
+     * @param int $journalist_id
+     * @param int $start
+     * @param int $amount
+     * @return array
+     */
+    public function getTransfersInRangeByJournalist($journalist_id, $start, $amount) {
+        $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY rumor_date DESC LIMIT :start, :amount";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':journalist_id', $journalist_id, PDO::PARAM_INT);
+        $req->bindParam(':start', $start, PDO::PARAM_INT);
+        $req->bindParam(':amount', $amount, PDO::PARAM_INT);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
     }

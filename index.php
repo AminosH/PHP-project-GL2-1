@@ -24,6 +24,6 @@ if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
         echo "Connection failed: " . $e->getMessage();
     }
 } else {
-    header("Location: login/login.html");
+    header("Location: login/login.php");
 }
 
