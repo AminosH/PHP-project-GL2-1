@@ -11,7 +11,7 @@ class TransferDAO {
      * @return array
      */
     public function getAllTransfers() {
-        $query = "SELECT * FROM Transfers ORDER BY rumor_date DESC";
+        $query = "SELECT * FROM Transfers ORDER BY transfer_id DESC";
         $req = $this->db->prepare($query);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
@@ -32,7 +32,7 @@ class TransferDAO {
      * @return array
      */
     public function getAllTransferByJournalistId($journalist_id) {
-        $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY rumor_date DESC";
+        $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY transfer_id DESC";
         $req = $this->db->prepare($query);
         $req->bindParam(':journalist_id', $journalist_id);
         $req->execute();
@@ -44,7 +44,7 @@ class TransferDAO {
      * @return array
      */
     public function getTransfersInRange($start, $amount) {
-        $query = "SELECT * FROM Transfers ORDER BY rumor_date DESC LIMIT :start, :amount";
+        $query = "SELECT * FROM Transfers ORDER BY transfer_id DESC LIMIT :start, :amount";
         $req = $this->db->prepare($query);
         $req->bindParam(':start', $start, PDO::PARAM_INT);
         $req->bindParam(':amount', $amount, PDO::PARAM_INT);
@@ -58,7 +58,7 @@ class TransferDAO {
      * @return array
      */
     public function getTransfersInRangeByJournalist($journalist_id, $start, $amount) {
-        $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY rumor_date DESC LIMIT :start, :amount";
+        $query = "SELECT * FROM Transfers WHERE journalist_id = :journalist_id ORDER BY transfer_id DESC LIMIT :start, :amount";
         $req = $this->db->prepare($query);
         $req->bindParam(':journalist_id', $journalist_id, PDO::PARAM_INT);
         $req->bindParam(':start', $start, PDO::PARAM_INT);
@@ -85,5 +85,24 @@ class TransferDAO {
         $req->bindParam(':journalist_id', $journalist_id);
         $req->execute();
         return $req->fetchColumn();
+    }
+    /**
+     * @param array $transferData
+     * @return void
+     */
+    public function addTransfer($transferData) {
+        $query = "INSERT INTO Transfers (player_name, former_club, new_club, rumor_date, certainty, contract_duration, contract_fee, journalist_id, description) VALUES (:player_name, :former_club, :new_club, :rumor_date, :certainty, :contract_duration, :contract_fee, :journalist_id, :description)";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':player_name', $transferData['player_name']);
+        $req->bindParam(':former_club', $transferData['former_club']);
+        $req->bindParam(':new_club', $transferData['new_club']);
+        $currentDate = date('Y-m-d');
+        $req->bindParam(':rumor_date', $currentDate);
+        $req->bindParam(':certainty', $transferData['certainty']);
+        $req->bindParam(':contract_duration', $transferData['contract_duration']);
+        $req->bindParam(':contract_fee', $transferData['contract_fee']);
+        $req->bindParam(':journalist_id', $transferData['journalist_id']);
+        $req->bindParam(':description', $transferData['description']);
+        $req->execute();
     }
 }

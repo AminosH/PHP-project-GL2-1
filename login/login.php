@@ -15,6 +15,8 @@ session_start();
 $_SESSION["loggedin"] = true;
 $_SESSION["login"] = $login;
 $_SESSION["remember_me"] = $_POST["remember"];
+$userDAO = new UserDAO();
+$_SESSION["id"] = $userDAO->getUserByLogin($login)['user_id'];
 if ($row['is_admin'] == 1) {
 header("location: ../admin/adminPage.php");
 } elseif ($row['is_journalist'] == 1) {
