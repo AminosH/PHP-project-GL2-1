@@ -50,7 +50,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <nav class="navbar navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#">MyTransfer</a>
-    <a class="navbar-text ml-auto" href="../logout/logout.php">Logout</a>
 </nav>
 <form action="login.php" method="post" style="margin-top: 60px;">
     <label for="login">Login:</label><br>
@@ -63,7 +62,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     </div>
     <input type="submit" value="Submit">
 </form>
-<p>Don't have an account? <a href="../signup/signup.html">Sign up</a></p>
+<p>Don't have an account? <a href="../signup/signup.php">Sign up</a></p>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>

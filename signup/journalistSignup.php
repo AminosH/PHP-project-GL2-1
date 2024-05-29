@@ -30,44 +30,85 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>Journalist Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/signup.css">
+    <link rel="stylesheet" href="../css/journalistSignup.css">
 </head>
 <body>
-<form action="journalistSignup.php" method="post">
-    <label for="login">Login:</label>
-    <input type="text" id="login" name="login" required>
+<nav class="navbar fixed-top">
+    <a class="navbar-brand" href="#">MyTransfer</a>
+</nav>
+<div class="container mt-5 pt-5">
+    <form action="journalistSignup.php" method="post">
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="login">Login:</label>
+                    <input type="text" id="login" name="login" class="form-control" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="first_name">First Name:</label>
+                    <input type="text" id="first_name" name="first_name" class="form-control" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="last_name">Last Name:</label>
+                    <input type="text" id="last_name" name="last_name" class="form-control" required>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" class="form-control" required>
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group">
+                    <label for="nationality">Nationality:</label>
+                    <input type="text" id="nationality" name="nationality" class="form-control" required>
+                </div>
+            </div>
+        </div>
 
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <label for="first_name">First Name:</label>
-    <input type="text" id="first_name" name="first_name" required>
-
-    <label for="last_name">Last Name:</label>
-    <input type="text" id="last_name" name="last_name" required>
-
-    <label for="nationality">Nationality:</label>
-    <input type="text" id="nationality" name="nationality" required>
-
-    <label for="birthdate">Birthdate:</label>
-    <input type="date" id="birthdate" name="birthdate" required>
-
-    <label for="independent">Independent:</label>
-    <input type="checkbox" id="independent" name="independent" checked>
-
-    <label for="media_company">Media Company:</label>
-    <input type="text" id="media_company" name="media_company" value=" " disabled required>
-
-
-    <label for="bio">Bio:</label>
-    <textarea id="bio" name="bio"></textarea>
-
-    <input type="submit" value="Submit">
-    <script src="journalistSignupFormControl.js"></script>
-</form>
-<a href="../login/login.php">Back to login</a>
-<p>You will not be able to connect until an admin approves your demand.</p>
+        <div class="row">
+            <div class="col">
+                <div class="form-group">
+                    <label for="media_company">Media Company:</label>
+                    <input type="text" id="media_company" name="media_company" class="form-control">
+                </div>
+            </div>
+            <div class="col">
+                <div class="form-group form-check">
+                    <input type="checkbox" id="independent" name="independent" class="form-check-input">
+                    <label class="form-check-label" for="independent">Independent</label>
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <label for="birthdate">Birthdate:</label>
+            <input type="date" id="birthdate" name="birthdate" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="bio">Bio:</label>
+            <textarea id="bio" name="bio" class="form-control"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="../login/login.php" class="mt-3 d-block">Back to login</a>
+</div>
+<script src="journalistSignupFormControl.js"></script>
 </body>
 </html>

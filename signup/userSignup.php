@@ -26,20 +26,30 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <head>
     <meta charset="UTF-8">
     <title>User Signup</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="../css/signup.css">
 </head>
 <body>
-<form action="userSignup.php" method="post">
-    <label for="login">Login:</label>
-    <input type="text" id="login" name="login" required>
-
-    <label for="password">Password:</label>
-    <input type="password" id="password" name="password" required>
-
-    <label for="email">Email:</label>
-    <input type="email" id="email" name="email" required>
-
-    <input type="submit" value="Submit">
-</form>
-<a href="../login/login.php">Back to login</a>
+<nav class="navbar fixed-top">
+    <a class="navbar-brand" href="#">MyTransfer</a>
+</nav>
+<div class="container mt-5">
+    <form action="userSignup.php" method="post">
+        <div class="form-group">
+            <label for="login">Login:</label>
+            <input type="text" id="login" name="login" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+        <div class="form-group">
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+    <a href="../login/login.php" class="mt-3 d-block">Back to login</a>
+</div>
 </body>
 </html>

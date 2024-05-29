@@ -1,0 +1,16 @@
+body {
+    padding-top: 10px;
+    min-height: 50vh;
+    background: url('../img/stadiumWallpaper.jpg') no-repeat center center fixed;
+    background-size: cover;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.form-check {
+    margin-bottom: 20px;
+}

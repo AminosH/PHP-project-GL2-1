@@ -66,7 +66,7 @@ $transfers = $transferDAO->getTransfersInRangeByJournalist($journalist_id, 0, 5)
         </div>
         <button type="submit" class="btn btn-primary">Submit</button>
     </form>
-    <h2>Recent Transfers</h2>
+    <h2>My Recent Transfers</h2>
     <?php echo $transfer->showArrayTransfers($transfers); ?>
 </div>
 </body>
