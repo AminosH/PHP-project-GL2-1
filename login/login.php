@@ -50,6 +50,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <body>
 <nav class="navbar navbar-light bg-light fixed-top">
     <a class="navbar-brand" href="#">MyTransfer</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=MyTransfer@gmail.com" target="_blank">
+        <button class="btn btn-light">Contact Us</button>
+    </a>
 </nav>
 <form action="login.php" method="post" style="margin-top: 60px;">
     <label for="login">Login:</label><br>

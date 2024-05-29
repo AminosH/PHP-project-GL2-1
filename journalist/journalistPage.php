@@ -26,6 +26,9 @@ $transfers = $transferDAO->getTransfersInRangeByJournalist($journalist_id, 0, 5)
 <body>
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">MyTransfer</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=haddadodelamine@gmail.com" target="_blank">
+        <button class="btn btn-light">Contact Us</button>
+    </a>
     <a class="navbar-text ml-auto" href="../logout/logout.php">Logout</a>
 </nav>
 <div class="content container">

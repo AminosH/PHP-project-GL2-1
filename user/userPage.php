@@ -25,6 +25,9 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 <body>
 <nav class="navbar navbar-light bg-light">
     <a class="navbar-brand" href="#">MyTransfer</a>
+    <a href="https://mail.google.com/mail/?view=cm&fs=1&to=MyTransfer@gmail.com" target="_blank">
+        <button class="btn btn-light">Contact Us</button>
+    </a>
     <a class="navbar-text ml-auto" href="../logout/logout.php">Logout</a>
 </nav>
 <div class="content">
