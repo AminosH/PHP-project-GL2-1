@@ -5,7 +5,6 @@ session_start();
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
     if (!isset($_SESSION['remember_me']) || !$_SESSION['remember_me']) {
-        // Destroy the session and redirect to login.php
         session_destroy();
         header("Location: login/login.php");
         exit;

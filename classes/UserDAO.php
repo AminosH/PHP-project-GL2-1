@@ -53,4 +53,15 @@ class UserDAO {
         $req->execute();
         return $req->fetch(PDO::FETCH_ASSOC);
     }
+    /**
+     * @param $login
+     * @return bool
+     */
+    public function loginExists($login) {
+        $query = "SELECT COUNT(*) FROM Users WHERE login = :login";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':login', $login);
+        $req->execute();
+        return $req->fetchColumn() > 0;
+    }
 }

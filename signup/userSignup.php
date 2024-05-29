@@ -1,24 +1,29 @@
 <?php
 include_once '../autoloader.php';
 
-
 $userDAO = new UserDAO();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $password = $_POST["password"];
-    $hashed_password = password_hash($password, PASSWORD_DEFAULT);
-    $userData = [
-        'login' => $_POST['login'],
-        'password' => $hashed_password,
-        'email' => $_POST['email'],
-        'is_admin' => false,
-        'is_journalist' => false
-    ];
+    $login = $_POST['login'];
+    if ($userDAO->loginExists($login)) {
+        echo "<script>alert('This login already exists. Please choose another one.');</script>";
+    } else {
+        $password = $_POST["password"];
+        $hashed_password = password_hash($password, PASSWORD_DEFAULT);
+        $userData = [
+            'login' => $login,
+            'password' => $hashed_password,
+            'email' => $_POST['email'],
+            'is_admin' => false,
+            'is_journalist' => false
+        ];
 
-    $userDAO->addUser($userData);
+        $userDAO->addUser($userData);
 
-    header("Location: ../login/login.php");
+        header("Location: ../login/login.php");
+    }
 }
+// rest of your code...
 ?>
 
 <!DOCTYPE html>
