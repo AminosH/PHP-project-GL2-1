@@ -83,31 +83,38 @@ class JournalistDAO {
      * @param array $journalists
      * @return string
      */
-    public function showArrayJournalists(array $journalists) {
+    public function showArrayJournalists(array $journalists, $adminMode = false) {
         ob_start();
 
         echo "<table class='table table-hover table-striped'>";
         echo "<thead class='thead-dark'>";
-        echo "<tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th></tr>";
-        echo "</thead>";
-        echo "<tbody>";
+        echo "<tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th>";
+        if ($adminMode) {
+            echo "<th>Action</th>";
+        }
+        echo "</tr></thead><tbody>";
 
         foreach ($journalists as $journalist) {
-            echo "<tr>";
+            // Determine the row color based on the isValid property
+            $rowColor = $journalist['isValid'] ? 'lightgreen' : 'lightcoral';
+
+            echo "<tr style='background-color: {$rowColor};'>";
             echo "<td>" . $journalist['journalist_id'] . "</td>";
             echo "<td>" . htmlspecialchars($journalist['first_name'], ENT_QUOTES) . "</td>";
             echo "<td>" . htmlspecialchars($journalist['last_name'], ENT_QUOTES) . "</td>";
             echo "<td>" . htmlspecialchars($journalist['nationality'], ENT_QUOTES) . "</td>";
             echo "<td class='birthdate'>" . $journalist['birthdate'] . "</td>";
-            echo "<td>" . htmlspecialchars($journalist['media_company'], ENT_QUOTES) . "</td>";
+            echo "<td>" . htmlspecialchars(($journalist['independent'] ? '' : $journalist['media_company']), ENT_QUOTES) . "</td>";
             echo "<td>" . ($journalist['independent'] ? 'Yes' : 'No') . "</td>";
             echo "<td>" . htmlspecialchars($journalist['bio'], ENT_QUOTES) . "</td>";
             echo "<td>" . ($journalist['isValid'] ? 'Yes' : 'No') . "</td>";
+            if ($adminMode) {
+                echo "<td><a href='../util/toggleIsValid.php?id=" . $journalist['journalist_id'] . "'>Swap</a></td>";
+            }
             echo "</tr>";
         }
 
-        echo "</tbody>";
-        echo "</table>";
+        echo "</tbody></table>";
 
         return ob_get_clean();
     }
@@ -122,12 +129,25 @@ class JournalistDAO {
             $info .= "Last Name: " . $journalist['last_name'] . "\n\n";
             $info .= "Nationality: " . $journalist['nationality'] . "\n";
             $info .= "Birthdate: " . $journalist['birthdate'] . "\n\n";
-            $info .= "Media Company: " . $journalist['media_company'] . "\n";
+            $info .= "Media Company: " . ($journalist['independent'] ? 'None' : $journalist['media_company']) . "\n";
             $info .= "Independent: " . ($journalist['independent'] ? 'Yes' : 'No') . "\n\n";
             $info .= "Bio: " . $journalist['bio'] . "\n";
             return $info;
         } else {
             return "No journalist found with ID: " . $journalist_id;
         }
+    }
+    /**
+     * @param $journalist_id
+     * @return void
+     */
+    public function toggleIsValid($journalist_id) {
+        $currentIsValid = $this->getIsValidByJournalistId($journalist_id);
+        $newIsValid = !$currentIsValid;
+        $query = "UPDATE Journalists SET isValid = :newIsValid WHERE journalist_id = :journalist_id";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':newIsValid', $newIsValid, PDO::PARAM_BOOL);
+        $req->bindParam(':journalist_id', $journalist_id);
+        $req->execute();
     }
 }

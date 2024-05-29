@@ -8,8 +8,8 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
 }
 
 if (isset($_GET['id'])) {
-    $transferDAO = new TransferDAO();
-    $transferDAO->deleteTransferById($_GET['id']);
+    $journalistDAO = new JournalistDAO();
+    $journalistDAO->toggleIsValid($_GET['id']);
 }
 
-header('Location: ../admin/adminPage.php#transfers');
+header('Location: ../admin/adminPage.php#journalists');

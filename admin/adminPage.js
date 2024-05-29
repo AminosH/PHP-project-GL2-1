@@ -1,5 +1,8 @@
 $(document).ready(function() {
-    $('a[href="#journalists"]').click(function() {
+    var journalistsLink = $('a[href="#journalists"]');
+    var transfersLink = $('a[href="#transfers"]');
+
+    journalistsLink.click(function() {
         $('#transfersList').html('');
         $.ajax({
             url: 'getJournalists.php',
@@ -10,7 +13,7 @@ $(document).ready(function() {
         });
     });
 
-    $('a[href="#transfers"]').click(function() {
+    transfersLink.click(function() {
         $('#journalistsList').html('');
         $.ajax({
             url: 'getTransfers.php',
@@ -20,4 +23,16 @@ $(document).ready(function() {
             }
         });
     });
+
+    function checkHash() {
+        if (window.location.hash === '#journalists') {
+            journalistsLink.click();
+        } else if (window.location.hash === '#transfers') {
+            transfersLink.click();
+        }
+    }
+
+    checkHash();
+
+    window.onhashchange = checkHash;
 });
