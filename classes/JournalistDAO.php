@@ -11,7 +11,7 @@ class JournalistDAO {
      * @return array
      */
     public function getAllJournalists() {
-        $query = "SELECT * FROM Journalists";
+        $query = "SELECT * FROM Journalists ORDER BY journalist_id DESC";
         $req = $this->db->prepare($query);
         $req->execute();
         return $req->fetchAll(PDO::FETCH_ASSOC);
@@ -53,7 +53,7 @@ class JournalistDAO {
         $user = $userDAO->getUserByLogin($journalistData['login']);
         $journalist_id = $user['user_id'];
 
-        $query = "INSERT INTO Journalists (journalist_id, first_name, last_name, nationality, birthdate, media_company, independent, bio) VALUES (:journalist_id, :first_name, :last_name, :nationality, :birthdate, :media_company, :independent, :bio)";
+        $query = "INSERT INTO Journalists (journalist_id, first_name, last_name, nationality, birthdate, media_company, independent, isValid, bio) VALUES (:journalist_id, :first_name, :last_name, :nationality, :birthdate, :media_company, :independent, :isValid,:bio)";
         $req = $this->db->prepare($query);
         $req->bindParam(':journalist_id', $journalist_id);
         $req->bindParam(':first_name', $journalistData['first_name']);

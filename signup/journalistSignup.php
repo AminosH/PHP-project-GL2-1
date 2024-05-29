@@ -19,8 +19,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             'last_name' => $_POST['last_name'],
             'nationality' => $_POST['nationality'],
             'birthdate' => $_POST['birthdate'],
-            'media_company' => $_POST["media_company"],
-            'independent' => $_POST['independent'],
+            'media_company' => $_POST["media_company"] ?? '',
+            'independent' => $_POST['independent'] ?? false,
+            'isValid' => false,
             'bio' => $_POST['bio']
         ];
 
