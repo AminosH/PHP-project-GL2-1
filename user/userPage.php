@@ -1,10 +1,13 @@
 <?php
 require_once '../autoloader.php';
 session_start();
+
+define('TRANSFERS_PER_PAGE', 10);
+
 $transferDAO = new TransferDAO();
 $transfer = new Transfer();
 $start = isset($_GET['start']) ? intval($_GET['start']) : 0;
-$amount = isset($_GET['amount']) ? intval($_GET['amount']) : 5;
+$amount = TRANSFERS_PER_PAGE;
 $transfers = $transferDAO->getTransfersInRange($start, $amount);
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {

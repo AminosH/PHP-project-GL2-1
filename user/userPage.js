@@ -1,5 +1,6 @@
 let page = 0;
 let totalTransfers;
+const TRANSFERS_PER_PAGE = 10;
 const prevButton = document.getElementById('prev');
 const nextButton = document.getElementById('next');
 
@@ -17,19 +18,19 @@ prevButton.addEventListener('click', function() {
 });
 
 nextButton.addEventListener('click', function() {
-    if ((page + 1) * 5 < totalTransfers) {
+    if ((page + 1) * TRANSFERS_PER_PAGE < totalTransfers) {
         page++;
         loadTransfers();
     }
 });
 
 function loadTransfers() {
-    const start = page * 5;
-    fetch(`getTransfersTable.php?start=${start}&amount=5`)
+    const start = page * TRANSFERS_PER_PAGE;
+    fetch(`getTransfersTable.php?start=${start}&amount=${TRANSFERS_PER_PAGE}`)
         .then(response => response.text())
         .then(data => {
             document.querySelector('.content').innerHTML = data;
             prevButton.disabled = page === 0;
-            nextButton.disabled = (page + 1) * 5 >= totalTransfers;
+            nextButton.disabled = (page + 1) * TRANSFERS_PER_PAGE >= totalTransfers;
         });
 }

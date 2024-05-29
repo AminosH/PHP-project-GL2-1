@@ -7,12 +7,22 @@ class Transfer {
     public function __construct() {
         $this->db = ConnexionBD::getInstance();
     }
-    public function showArrayTransfers(array $transfers, $deleteMode = false) {
+    /**
+     * @param array $transfers
+     * @param bool $deleteMode
+     * @return string
+     */
+    public function showArrayTransfers(array $transfers, bool $deleteMode = false): string
+    {
         ob_start();
 
         echo "<table class='table table-striped'>";
         echo "<thead class='thead-dark'>";
-        echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Contract Duration (Y)</th><th>Contract Fee (M£)</th><th>Journalist</th>";
+        echo "<tr>";
+        if ($deleteMode) {
+            echo "<th>Transfer ID</th>";
+        }
+        echo "<th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Contract Duration (Y)</th><th>Contract Fee (M£)</th><th>Journalist</th>";
         if ($deleteMode) {
             echo "<th>Delete</th>";
         }
@@ -22,7 +32,9 @@ class Transfer {
             $certainty = $transfer['certainty'];
             $hue = $certainty * 1.2;
             echo "<tr style='background-color: hsl({$hue}, 100%, 90%);' title='" . htmlspecialchars($transfer['description'], ENT_QUOTES) . "'>";
-            echo "<td>" . $transfer['transfer_id'] . "</td>";
+            if ($deleteMode) {
+                echo "<td>" . $transfer['transfer_id'] . "</td>";
+            }
             echo "<td>" . $transfer['player_name'] . "</td>";
             echo "<td>" . $transfer['former_club'] . "</td>";
             echo "<td>" . $transfer['new_club'] . "</td>";
