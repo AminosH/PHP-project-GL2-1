@@ -79,12 +79,16 @@ class JournalistDAO {
         $result = $req->fetch(PDO::FETCH_ASSOC);
         return isset($result['isValid']) && (bool)$result['isValid'];
     }
+    /**
+     * @param array $journalists
+     * @return string
+     */
     public function showArrayJournalists(array $journalists) {
         ob_start();
 
         echo "<table class='table table-hover table-striped'>";
         echo "<thead class='thead-dark'>";
-        echo "<tr><th>Journalist ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th></tr>";
+        echo "<tr><th>ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th></tr>";
         echo "</thead>";
         echo "<tbody>";
 
@@ -94,7 +98,7 @@ class JournalistDAO {
             echo "<td>" . htmlspecialchars($journalist['first_name'], ENT_QUOTES) . "</td>";
             echo "<td>" . htmlspecialchars($journalist['last_name'], ENT_QUOTES) . "</td>";
             echo "<td>" . htmlspecialchars($journalist['nationality'], ENT_QUOTES) . "</td>";
-            echo "<td>" . $journalist['birthdate'] . "</td>";
+            echo "<td class='birthdate'>" . $journalist['birthdate'] . "</td>";
             echo "<td>" . htmlspecialchars($journalist['media_company'], ENT_QUOTES) . "</td>";
             echo "<td>" . ($journalist['independent'] ? 'Yes' : 'No') . "</td>";
             echo "<td>" . htmlspecialchars($journalist['bio'], ENT_QUOTES) . "</td>";
@@ -107,6 +111,10 @@ class JournalistDAO {
 
         return ob_get_clean();
     }
+    /**
+     * @param $journalist_id
+     * @return string
+     */
     public function getJournalistInfoAsString($journalist_id) {
         $journalist = $this->getJournalistById($journalist_id);
         if ($journalist) {

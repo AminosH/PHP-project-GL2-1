@@ -105,4 +105,14 @@ class TransferDAO {
         $req->bindParam(':description', $transferData['description']);
         $req->execute();
     }
+    /**
+     * @param $transfer_id
+     * @return void
+     */
+    public function deleteTransferById($transfer_id) {
+        $query = "DELETE FROM Transfers WHERE transfer_id = :transfer_id";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':transfer_id', $transfer_id);
+        $req->execute();
+    }
 }

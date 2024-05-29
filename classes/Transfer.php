@@ -7,17 +7,16 @@ class Transfer {
     public function __construct() {
         $this->db = ConnexionBD::getInstance();
     }
-    /**
-     * @return string
-     */
-    public function showArrayTransfers(array $transfers) {
+    public function showArrayTransfers(array $transfers, $deleteMode = false) {
         ob_start();
 
         echo "<table class='table table-striped'>";
         echo "<thead class='thead-dark'>";
-        echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Contract Duration (Y)</th><th>Contract Fee (M£)</th><th>Journalist</th></tr>";
-        echo "</thead>";
-        echo "<tbody>";
+        echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Contract Duration (Y)</th><th>Contract Fee (M£)</th><th>Journalist</th>";
+        if ($deleteMode) {
+            echo "<th>Delete</th>";
+        }
+        echo "</tr></thead><tbody>";
 
         foreach ($transfers as $transfer) {
             $certainty = $transfer['certainty'];
@@ -33,11 +32,13 @@ class Transfer {
             $journalistDAO = new JournalistDAO();
             $journalistInfo = $journalistDAO->getJournalistInfoAsString($transfer['journalist_id']);
             echo "<td title='" . htmlspecialchars($journalistInfo, ENT_QUOTES) . "'>" . $journalistDAO->getJournalistNameById($transfer['journalist_id']) . "</td>";
+            if ($deleteMode) {
+                echo "<td><a href='../util/deleteTransfer.php?id=" . $transfer['transfer_id'] . "'>Delete</a></td>";
+            }
             echo "</tr>";
         }
 
-        echo "</tbody>";
-        echo "</table>";
+        echo "</tbody></table>";
 
         return ob_get_clean();
     }

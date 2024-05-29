@@ -17,6 +17,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $_SESSION["remember_me"] = $_POST["remember"];
             $userDAO = new UserDAO();
             $_SESSION["id"] = $userDAO->getUserByLogin($login)['user_id'];
+            $_SESSION["is_admin"] = $row['is_admin'];
             $journalistDAO = new JournalistDAO();
             if ($row['is_admin'] == 1) {
                 header("location: ../admin/adminPage.php");
