@@ -1,21 +1,25 @@
 <?php
-require_once 'classes/ConnexionBD.php';
+require_once 'autoloader.php';
 
 session_start();
 
 if (isset($_SESSION['loggedin']) && $_SESSION['loggedin']) {
+    if (!isset($_SESSION['remember_me']) || !$_SESSION['remember_me']) {
+        // Destroy the session and redirect to login.php
+        session_destroy();
+        header("Location: login/login.php");
+        exit;
+    }
+
     $login = $_SESSION['login'];
 
     try {
-        $bdd = ConnexionBD::getInstance();
-        $req = $bdd->prepare("SELECT is_admin, is_journalist FROM users WHERE login = :login");
-        $req->bindParam(':login', $login);
-        $req->execute();
-        $row = $req->fetch(PDO::FETCH_ASSOC);
+        $userDAO = new UserDAO();
+        $user = $userDAO->getUserByLogin($login);
 
-        if ($row['is_admin'] == 1) {
+        if ($user['is_admin'] == 1) {
             header("Location: admin/adminPage.php");
-        } elseif ($row['is_journalist'] == 1) {
+        } elseif ($user['is_journalist'] == 1) {
             header("Location: journalist/journalistPage.php");
         } else {
             header("Location: user/userPage.php");
