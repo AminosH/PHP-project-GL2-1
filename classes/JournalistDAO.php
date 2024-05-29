@@ -63,6 +63,44 @@ class JournalistDAO {
         $req->bindParam(':media_company', $journalistData['media_company']);
         $req->bindParam(':independent', $journalistData['independent'], PDO::PARAM_BOOL);
         $req->bindParam(':bio', $journalistData['bio']);
+        $isValid = false;
+        $req->bindParam(':isValid', $isValid, PDO::PARAM_BOOL);
         $req->execute();
+    }
+    /**
+     * @param $journalist_id
+     * @return bool
+     */
+    public function getIsValidByJournalistId($journalist_id) {
+        $query = "SELECT isValid FROM Journalists WHERE journalist_id = :journalist_id";
+        $req = $this->db->prepare($query);
+        $req->bindParam(':journalist_id', $journalist_id);
+        $req->execute();
+        $result = $req->fetch(PDO::FETCH_ASSOC);
+        return isset($result['isValid']) && (bool)$result['isValid'];
+    }
+    public function showArrayJournalists(array $journalists) {
+        ob_start();
+
+        echo "<table>";
+        echo "<tr><th>Journalist ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th></tr>";
+
+        foreach ($journalists as $journalist) {
+            echo "<tr>";
+            echo "<td>" . $journalist['journalist_id'] . "</td>";
+            echo "<td>" . htmlspecialchars($journalist['first_name'], ENT_QUOTES) . "</td>";
+            echo "<td>" . htmlspecialchars($journalist['last_name'], ENT_QUOTES) . "</td>";
+            echo "<td>" . htmlspecialchars($journalist['nationality'], ENT_QUOTES) . "</td>";
+            echo "<td>" . $journalist['birthdate'] . "</td>";
+            echo "<td>" . htmlspecialchars($journalist['media_company'], ENT_QUOTES) . "</td>";
+            echo "<td>" . ($journalist['independent'] ? 'Yes' : 'No') . "</td>";
+            echo "<td>" . htmlspecialchars($journalist['bio'], ENT_QUOTES) . "</td>";
+            echo "<td>" . ($journalist['isValid'] ? 'Yes' : 'No') . "</td>";
+            echo "</tr>";
+        }
+
+        echo "</table>";
+
+        return ob_get_clean();
     }
 }
