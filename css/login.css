@@ -1,0 +1,68 @@
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f4f4f4;
+    margin: 0;
+    padding: 0;
+}
+
+.navbar {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+form {
+    max-width: 400px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+}
+
+form label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+form input[type="text"],
+form input[type="password"] {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 20px;
+    border-radius: 4px;
+    border: 1px solid #ddd;
+}
+
+form input[type="submit"] {
+    padding: 10px 20px;
+    border: none;
+    color: #fff;
+    background-color: #007bff;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+form input[type="submit"]:hover {
+    background-color: #0056b3;
+}
+
+form p {
+    margin-top: 20px;
+}
+
+form + p {
+    text-align: center;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+form .remember-me input[type="checkbox"] {
+    transform: scale(1.5);
+    margin-right: 10px;
+}
+
+form .remember-me {
+    margin-bottom: 20px;
+}

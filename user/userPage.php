@@ -8,7 +8,6 @@ $amount = isset($_GET['amount']) ? intval($_GET['amount']) : 5;
 $transfers = $transferDAO->getTransfersInRange($start, $amount);
 
 if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-    // This is an AJAX request
     echo $transfer->showArrayTransfers($transfers);
     exit;
 }
@@ -19,10 +18,15 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
 <head>
     <meta charset="UTF-8">
     <title>UserPage</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="../css/userPage.css">
+    <link rel="stylesheet" href="../css/transfers.css">
 </head>
 <body>
-<div class="header">MyTransfer</div>
+<nav class="navbar navbar-light bg-light">
+    <a class="navbar-brand" href="#">MyTransfer</a>
+    <a class="navbar-text ml-auto" href="../logout/logout.php">Logout</a>
+</nav>
 <div class="content">
     <?php echo $transfer->showArrayTransfers($transfers); ?>
 </div>
@@ -31,6 +35,5 @@ if (!empty($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQ
     <button id="next">→</button>
 </div>
 <script src="userPage.js"></script>
-<a href="../logout/logout.php">Logout</a>
 </body>
 </html>

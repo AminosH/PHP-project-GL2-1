@@ -20,17 +20,8 @@ $transfers = $transferDAO->getTransfersInRangeByJournalist($journalist_id, 0, 5)
 <head>
     <title>Journalist Page</title>
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
-    <style>
-        .navbar {
-            position: fixed;
-            width: 100%;
-            top: 0;
-            z-index: 100;
-        }
-        .content {
-            margin-top: 60px;
-        }
-    </style>
+    <link rel="stylesheet" href="../css/journalistPage.css">
+    <link rel="stylesheet" href="../css/transfers.css">
 </head>
 <body>
 <nav class="navbar navbar-light bg-light">

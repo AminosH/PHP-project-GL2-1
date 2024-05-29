@@ -13,23 +13,30 @@ class Transfer {
     public function showArrayTransfers(array $transfers) {
         ob_start();
 
-        echo "<table>";
-        echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Certainty</th><th>Contract Duration</th><th>Contract Fee</th><th>Journalist ID</th></tr>";
+        echo "<table class='table table-striped'>";
+        echo "<thead class='thead-dark'>";
+        echo "<tr><th>Transfer ID</th><th>Player Name</th><th>Former Club</th><th>New Club</th><th>Rumor Date</th><th>Contract Duration (Y)</th><th>Contract Fee (M£)</th><th>Journalist</th></tr>";
+        echo "</thead>";
+        echo "<tbody>";
 
         foreach ($transfers as $transfer) {
-            echo "<tr title='" . htmlspecialchars($transfer['description'], ENT_QUOTES) . "'>";
+            $certainty = $transfer['certainty'];
+            $hue = $certainty * 1.2;
+            echo "<tr style='background-color: hsl({$hue}, 100%, 90%);' title='" . htmlspecialchars($transfer['description'], ENT_QUOTES) . "'>";
             echo "<td>" . $transfer['transfer_id'] . "</td>";
             echo "<td>" . $transfer['player_name'] . "</td>";
             echo "<td>" . $transfer['former_club'] . "</td>";
             echo "<td>" . $transfer['new_club'] . "</td>";
             echo "<td>" . $transfer['rumor_date'] . "</td>";
-            echo "<td>" . $transfer['certainty'] . "</td>";
             echo "<td>" . $transfer['contract_duration'] . "</td>";
             echo "<td>" . $transfer['contract_fee'] . "</td>";
-            echo "<td>" . $transfer['journalist_id'] . "</td>";
+            $journalistDAO = new JournalistDAO();
+            $journalistInfo = $journalistDAO->getJournalistInfoAsString($transfer['journalist_id']);
+            echo "<td title='" . htmlspecialchars($journalistInfo, ENT_QUOTES) . "'>" . $journalistDAO->getJournalistNameById($transfer['journalist_id']) . "</td>";
             echo "</tr>";
         }
 
+        echo "</tbody>";
         echo "</table>";
 
         return ob_get_clean();

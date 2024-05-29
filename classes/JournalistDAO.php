@@ -82,8 +82,11 @@ class JournalistDAO {
     public function showArrayJournalists(array $journalists) {
         ob_start();
 
-        echo "<table>";
+        echo "<table class='table table-hover table-striped'>";
+        echo "<thead class='thead-dark'>";
         echo "<tr><th>Journalist ID</th><th>First Name</th><th>Last Name</th><th>Nationality</th><th>Birthdate</th><th>Media Company</th><th>Independent</th><th>Bio</th><th>isValid</th></tr>";
+        echo "</thead>";
+        echo "<tbody>";
 
         foreach ($journalists as $journalist) {
             echo "<tr>";
@@ -99,8 +102,24 @@ class JournalistDAO {
             echo "</tr>";
         }
 
+        echo "</tbody>";
         echo "</table>";
 
         return ob_get_clean();
+    }
+    public function getJournalistInfoAsString($journalist_id) {
+        $journalist = $this->getJournalistById($journalist_id);
+        if ($journalist) {
+            $info = "First Name: " . $journalist['first_name'] . "\n";
+            $info .= "Last Name: " . $journalist['last_name'] . "\n\n";
+            $info .= "Nationality: " . $journalist['nationality'] . "\n";
+            $info .= "Birthdate: " . $journalist['birthdate'] . "\n\n";
+            $info .= "Media Company: " . $journalist['media_company'] . "\n";
+            $info .= "Independent: " . ($journalist['independent'] ? 'Yes' : 'No') . "\n\n";
+            $info .= "Bio: " . $journalist['bio'] . "\n";
+            return $info;
+        } else {
+            return "No journalist found with ID: " . $journalist_id;
+        }
     }
 }
